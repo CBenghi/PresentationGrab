@@ -366,8 +366,8 @@ namespace PresentationGrab
 
         private void button9_Click(object sender, EventArgs e)
         {
-            string L = "09";
-            string P = "05";
+            string L = "10";
+            string P = "04";
 
             var ret = MessageBox.Show($"Have you set L ({L}), P ({P}) and music file?", "Settings", MessageBoxButtons.YesNo);
             if (ret != DialogResult.Yes)
@@ -417,5 +417,14 @@ namespace PresentationGrab
             cmdSetCrop.Visible = true;
         }
 
+        private void nudBRW_ValueChanged(object sender, EventArgs e)
+        {
+            s.ButtonregionWidth = (int)nudBRW.Value;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            s.ButtonregionHeight = (int)nudBRH.Value;
+        }
     }
 }

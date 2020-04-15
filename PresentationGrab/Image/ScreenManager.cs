@@ -144,11 +144,12 @@ namespace PresentationGrab
 
         public int ImageDifferenceThreshold { get; set; } = 2400;
 
+        TimeSpan tMin = new TimeSpan(0, 0, 2);
 
         internal ScreenManagerResult CheckNew(DateTime timeStamp, bool forceImageCapture = false, Bitmap bitmapUnderAnalysis = null)
         {
             ScreenManagerResult ret = new ScreenManagerResult();
-
+            
             // var s = new Stopwatch(); s.Start();
             if (bitmapUnderAnalysis == null)
                 bitmapUnderAnalysis = GetCroppedBitmapFromScreen();
@@ -156,8 +157,6 @@ namespace PresentationGrab
             // remove control region in the bottom left
             //
             bitmapUnderAnalysis = RemoveButtonsRegion(bitmapUnderAnalysis);
-
-
             if (diffFilter == null)
             {
                 // we need to init the first image
@@ -217,23 +216,37 @@ namespace PresentationGrab
             return ret;
         }
 
+        public int ButtonregionWidth { get; set; } = 300;
+        public int ButtonregionHeight { get; set; } = 30;
+
+
         public Bitmap RemoveButtonsRegion(Bitmap bitmapUnderAnalysis)
         {
             GraphicsPath p = new GraphicsPath();
-            p.AddRectangle(new Rectangle(0, 1066, 307, 37));
+            p.AddRectangle(new Rectangle(0, bitmapUnderAnalysis.Height - ButtonregionHeight, ButtonregionWidth, ButtonregionHeight));
 
             Graphics graphics = Graphics.FromImage(bitmapUnderAnalysis);
             graphics.FillPath(Brushes.White, p);
             return bitmapUnderAnalysis;
         }
 
+        DateTime LastCaptureTime { get; set; } = DateTime.Now;
+
         Accord.Point pointerToRemove;
 
         readonly PointerDetector pointerDetector = new PointerDetector();
 
+        TimeSpan MinDeltaCaptureTime = new TimeSpan(0, 0, 2); // 2 seconds.
+
         private void SetBitmap(DateTime timeStamp, Bitmap bitmapUnderAnalysis)
         {
-            SaveCurrentBackground();
+            // decides whether to save the current background depending on elapsed time
+            //
+            var delta = timeStamp - LastCaptureTime;
+            if (delta > MinDeltaCaptureTime)
+                SaveCurrentBackground(); // save the old image and start afresh
+            else
+                timeStamp = currentBackgroundTimeStamp; // keep the timestamp of the dropped image.
             currentBackground = bitmapUnderAnalysis;
             diffFilter = new Subtract(currentBackground);
             if (TrackPowerPointLaser)
@@ -249,7 +262,7 @@ namespace PresentationGrab
         {
             if (currentBackground != null)
             {
-                var outName = $"{currentBackgroundTimeStamp:yyyy-dd-M--HH-mm-ss}.png";
+                var outName = $"{currentBackgroundTimeStamp:yyyy-M-dd--HH-mm-ss}.png";
                 if (RecordingStartDateTime != default(DateTime))
                 {
                     var diffTime = currentBackgroundTimeStamp - RecordingStartDateTime;

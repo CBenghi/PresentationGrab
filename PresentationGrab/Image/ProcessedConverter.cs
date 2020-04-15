@@ -1,4 +1,5 @@
 ﻿using Accord.Imaging.Filters;
+using NAudio.Wave;
 using PresentationGrab.Preprocess;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,10 @@ namespace PresentationGrab.Image
         internal bool Process(string L, string P)
         {
             DirectoryInfo source = new DirectoryInfo($@"C:\Data\Work\Esame Stato\SupportingMedia\T{L}\P{P}");
+            if (!source.Exists)
+            {
+                source = new DirectoryInfo(@".\DebugBlob\output\");
+            }
             DirectoryInfo destParent = new DirectoryInfo($@"C:\Data\Work\Esame Stato\SupportingMedia\L{L}");
             if (!destParent.Exists)
                 destParent.Create();
@@ -69,12 +74,20 @@ namespace PresentationGrab.Image
             var imagesFiles = source.GetFiles("*.png");
             var dates = imagesFiles.Select(x => CapturedImage.GetTimeStampDate(x));
             var mindate = dates.Min().Date;
-            var audioDateTime = mindate.AddHours(hou).AddMinutes(min).AddSeconds(sec);
+            var audioDateTimeStart = mindate.AddHours(hou).AddMinutes(min).AddSeconds(sec);
+
+            TimeSpan duration = new TimeSpan(24, 0, 0); // a full day, if something goes wrong in reading the mp3
+            using (var reader = new Mp3FileReader(musicFile.FullName))
+            {
+                duration = reader.TotalTime;
+            }
+            // var audioDateTimeEnd = mindate + duration;
+
 
             // process images
             foreach (FileInfo imagefile in imagesFiles)
             {
-                ProcessImageFile(imagefile, audioDateTime, dest);
+                ProcessImageFile(imagefile, audioDateTimeStart, dest, duration);
             }
             var cursorName = source.GetFiles("cursor.txt").FirstOrDefault();
             if (cursorName == null)
@@ -99,8 +112,12 @@ namespace PresentationGrab.Image
                         var ly = Convert.ToInt32(mtLyr.Groups["y"].Value);
                         var rest = mtLyr.Groups["rest"].Value;
                         var thisTs = mindate.AddHours(lh).AddMinutes(lm).AddSeconds(ls).AddMilliseconds(lms);
-                        var thisDiff = thisTs - audioDateTime;
+                        var thisDiff = thisTs - audioDateTimeStart;
 
+                        if (thisDiff < new TimeSpan(0))
+                            continue;
+                        if (thisDiff > duration)
+                            break;
                         if (doCrop)
                         {
                             lx = lx - cropper.X;
@@ -113,10 +130,14 @@ namespace PresentationGrab.Image
             }
         }
 
-        private void ProcessImageFile(FileInfo image, DateTime audioDateTime, DirectoryInfo desitnationDir)
+        private void ProcessImageFile(FileInfo image, DateTime audioDateTime, DirectoryInfo desitnationDir, TimeSpan maxDuration)
         {
             var imageTimeStamp = CapturedImage.GetTimeStampDate(image);
             var diff = imageTimeStamp - audioDateTime;
+            if (diff > maxDuration)
+                return;
+            if (diff < new TimeSpan(0))
+                return;
             var sec = (int)diff.TotalSeconds;
             var ts = GetImagesTimestamp(sec);
             var destName = ts + " - .png";
