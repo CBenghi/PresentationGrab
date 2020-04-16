@@ -22,6 +22,7 @@ namespace PresentationGrab
         {
             InitializeComponent();
             trackBar1.Value = wordSeparationThreshold;
+            UpdateCaptureToggleButton();
         }
 
         private void OldCodeImageNames(object sender, EventArgs e)
@@ -225,9 +226,15 @@ namespace PresentationGrab
         {
             screenCaptureTimer.Interval = (int)nudCaptureInterval.Value;
             screenCaptureTimer.Enabled = !screenCaptureTimer.Enabled;
+            UpdateCaptureToggleButton();
+        }
+
+        private void UpdateCaptureToggleButton()
+        {
             if (screenCaptureTimer.Enabled)
             {
                 btnCaptureToggle.Text = "Stop screen capture";
+                btnCaptureToggle.ImageIndex = 1;
                 // status managed by timer
             }
             else
@@ -235,6 +242,7 @@ namespace PresentationGrab
                 btnCaptureToggle.Text = "Start screen capture";
                 lblStatus.Text = "Stopped";
                 lblStatus.BackColor = Color.White;
+                btnCaptureToggle.ImageIndex = 0;
             }
         }
 
@@ -350,7 +358,7 @@ namespace PresentationGrab
         private void SetFormToLeft()
         {
             Location = new Point(10, 100);
-            Size = new Size(230, 550);
+            Size = new Size(230, 600);
         }
         
         private void cmdSetCrop_Click(object sender, EventArgs e)

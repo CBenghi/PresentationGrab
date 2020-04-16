@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.button4 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
@@ -69,6 +70,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -429,6 +431,9 @@
             // 
             // btnCaptureToggle
             // 
+            this.btnCaptureToggle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCaptureToggle.ImageIndex = 0;
+            this.btnCaptureToggle.ImageList = this.imageList1;
             this.btnCaptureToggle.Location = new System.Drawing.Point(6, 245);
             this.btnCaptureToggle.Name = "btnCaptureToggle";
             this.btnCaptureToggle.Size = new System.Drawing.Size(159, 23);
@@ -571,6 +576,13 @@
             // 
             this.mouseCaptureTimer.Tick += new System.EventHandler(this.mouseCaptureTimer_Tick);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Record.png");
+            this.imageList1.Images.SetKeyName(1, "Stop.png");
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -643,6 +655,7 @@
         private System.Windows.Forms.NumericUpDown nudBRH;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown nudBRW;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 
