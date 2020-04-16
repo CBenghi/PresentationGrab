@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Accord.IO;
 using PresentationGrab.Image;
@@ -395,6 +396,15 @@ namespace PresentationGrab
             if (s == null)
                 return;
             PerformCapture(true);
+            if (!screenCaptureTimer.Enabled)
+            {
+                Task.Delay(2000).ContinueWith(t => StatusClearBackground());
+            }
+        }
+
+        private void StatusClearBackground()
+        {
+            lblStatus.BackColor = Color.Transparent;
         }
 
         private void nudAreaThreshold_ValueChanged(object sender, EventArgs e)

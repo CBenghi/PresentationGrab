@@ -144,8 +144,6 @@ namespace PresentationGrab
 
         public int ImageDifferenceThreshold { get; set; } = 2400;
 
-        TimeSpan tMin = new TimeSpan(0, 0, 2);
-
         internal ScreenManagerResult CheckNew(DateTime timeStamp, bool forceImageCapture = false, Bitmap bitmapUnderAnalysis = null)
         {
             ScreenManagerResult ret = new ScreenManagerResult();
@@ -160,9 +158,8 @@ namespace PresentationGrab
             if (diffFilter == null)
             {
                 // we need to init the first image
-                SetBitmap(timeStamp, bitmapUnderAnalysis); // this also sets need to remove pointer
-                ret.ResultingBitmap = bitmapUnderAnalysis;
-                ret.ResultActions = Results.NewImage;
+                ret.ResultActions = SetBitmap(timeStamp, bitmapUnderAnalysis); // this also sets need to remove pointer
+                ret.ResultingBitmap = bitmapUnderAnalysis;               
             }
             else
             {
@@ -184,8 +181,7 @@ namespace PresentationGrab
                 {
                     // a new image background
                     //
-                    SetBitmap(timeStamp, bitmapUnderAnalysis); // this also sets need to remove pointer
-                    ret.ResultActions = Results.NewImage;
+                    ret.ResultActions = SetBitmap(timeStamp, bitmapUnderAnalysis); // this also sets need to remove pointer
                     ret.ResultingBitmap = bitmapUnderAnalysis;
                     if (needPointerRemoval)
                     {
@@ -230,7 +226,7 @@ namespace PresentationGrab
             return bitmapUnderAnalysis;
         }
 
-        DateTime LastCaptureTime { get; set; } = DateTime.Now;
+//         DateTime LastCaptureTime { get; set; } = DateTime.Now;
 
         Accord.Point pointerToRemove;
 
@@ -238,15 +234,22 @@ namespace PresentationGrab
 
         TimeSpan MinDeltaCaptureTime = new TimeSpan(0, 0, 2); // 2 seconds.
 
-        private void SetBitmap(DateTime timeStamp, Bitmap bitmapUnderAnalysis)
+        private Results SetBitmap(DateTime timeStamp, Bitmap bitmapUnderAnalysis)
         {
+            var ret = Results.NewImage;
             // decides whether to save the current background depending on elapsed time
             //
-            var delta = timeStamp - LastCaptureTime;
+            var delta = timeStamp - currentBackgroundTimeStamp;
             if (delta > MinDeltaCaptureTime)
+            {
                 SaveCurrentBackground(); // save the old image and start afresh
+            }
             else
+            {
+                // does not save but keeps previos timestamp:
+                ret = Results.CorrectedImage;
                 timeStamp = currentBackgroundTimeStamp; // keep the timestamp of the dropped image.
+            }
             currentBackground = bitmapUnderAnalysis;
             diffFilter = new Subtract(currentBackground);
             if (TrackPowerPointLaser)
@@ -254,6 +257,7 @@ namespace PresentationGrab
             else
                 needPointerRemoval = false;
             currentBackgroundTimeStamp = timeStamp;
+            return ret;
         }
 
         internal DateTime RecordingStartDateTime { get; set; }
