@@ -63,6 +63,11 @@ namespace PresentationGrab.Image
 
         internal void Process(DirectoryInfo source, DirectoryInfo dest, FileInfo musicFile)
         {
+            if (!musicFile.Exists)
+            {
+                System.Windows.Forms.MessageBox.Show("Audio file missing.", "Error", System.Windows.Forms.MessageBoxButtons.OK);
+                return;
+            }
             Regex r = new Regex(@"(\d+)-(\d+)-(\d+)\.mp3$");
             var m = r.Match(musicFile.Name);
             if (!m.Success)

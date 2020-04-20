@@ -387,15 +387,14 @@ namespace PresentationGrab
 
             pc.Process(L, P);
             MessageBox.Show("Done");
-
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
             ProcessedConverter pc = new ProcessedConverter();
-            var s = new DirectoryInfo(@"C:\Data\Dev\Other\PresentationGrab\PresentationGrab\bin\Debug\DebugBlob\output");
-            var d = new DirectoryInfo(@"C:\Data\Work\CDE\OpenCde\Meetings\2020 04 06");
-            var a = new FileInfo(@"C:\Data\Work\CDE\OpenCde\Meetings\2020 04 06\2020 06 04 - OpenCDE_11-11-20.mp3");
+            var s = new DirectoryInfo(@"C:\Data\Dev\MyUtils\PresentationGrab\PresentationGrab\bin\Debug\DebugBlob\output");
+            var d = new DirectoryInfo(@"C:\Data\Work\CDE\OpenCde\Meetings\2020 04 20");
+            var a = new FileInfo(@"C:\Data\Work\CDE\OpenCde\Meetings\2020 04 20\CDE_11-03-04.mp3");
             pc.Process(s, d, a);
         }
 
