@@ -117,7 +117,7 @@ namespace PresentationGrab
             return cropped;
         }
 
-        internal DirectoryInfo OutputDirectory { get; set; } = new DirectoryInfo(@".\DebugBlob\output\");
+        internal DirectoryInfo OutputDirectory { get; set; } = new DirectoryInfo(@"C:\Data\Work\Wip\Capture\");
 
         Bitmap currentBackground;
         DateTime currentBackgroundTimeStamp;

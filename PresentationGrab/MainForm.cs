@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -442,6 +443,28 @@ namespace PresentationGrab
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             s.ButtonregionHeight = (int)nudBRH.Value;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern uint SetWindowDisplayAffinity(IntPtr hwnd, uint dwAffinity);
+
+
+        enum AffinityMode
+        {
+            WDA_NONE = 0,
+            WDA_MONITOR = 1
+        }
+
+        AffinityMode md = AffinityMode.WDA_NONE;
+
+        private void cmdAffinity_Click(object sender, EventArgs e)
+        {
+            if (md == AffinityMode.WDA_NONE)
+                md = AffinityMode.WDA_MONITOR;
+            else
+                md = AffinityMode.WDA_NONE;
+            SetWindowDisplayAffinity(this.Handle, (uint)md);
+            cmdAffinity.Text = $"Affinity is {md.ToString()}";
         }
     }
 }

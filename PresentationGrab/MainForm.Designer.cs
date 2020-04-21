@@ -57,6 +57,7 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.nudCaptureInterval = new System.Windows.Forms.NumericUpDown();
             this.btnCaptureToggle = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button9 = new System.Windows.Forms.Button();
@@ -70,7 +71,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.cmdAffinity = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -442,6 +443,13 @@
             this.btnCaptureToggle.UseVisualStyleBackColor = true;
             this.btnCaptureToggle.Click += new System.EventHandler(this.btnCaptureToggle_Click);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Record.png");
+            this.imageList1.Images.SetKeyName(1, "Stop.png");
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.groupBox4);
@@ -528,6 +536,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cmdAffinity);
             this.groupBox2.Controls.Add(this.button6);
             this.groupBox2.Location = new System.Drawing.Point(9, 6);
             this.groupBox2.Name = "groupBox2";
@@ -576,12 +585,15 @@
             // 
             this.mouseCaptureTimer.Tick += new System.EventHandler(this.mouseCaptureTimer_Tick);
             // 
-            // imageList1
+            // cmdAffinity
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Record.png");
-            this.imageList1.Images.SetKeyName(1, "Stop.png");
+            this.cmdAffinity.Location = new System.Drawing.Point(6, 48);
+            this.cmdAffinity.Name = "cmdAffinity";
+            this.cmdAffinity.Size = new System.Drawing.Size(144, 23);
+            this.cmdAffinity.TabIndex = 20;
+            this.cmdAffinity.Text = "Affintiy";
+            this.cmdAffinity.UseVisualStyleBackColor = true;
+            this.cmdAffinity.Click += new System.EventHandler(this.cmdAffinity_Click);
             // 
             // MainForm
             // 
@@ -656,6 +668,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown nudBRW;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Button cmdAffinity;
     }
 }
 
