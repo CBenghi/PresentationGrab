@@ -16,7 +16,7 @@ namespace PresentationGrab
                 );
 
                
-        static readonly DirectoryInfo outFolder = new DirectoryInfo(@"C:\Data\Work\Wip\");
+        static DirectoryInfo outFolder { get; } = new DirectoryInfo(@"C:\Data\Work\Wip\");
 
         internal static IEnumerable<FileInfo> GetFiles(string pattern)
         {

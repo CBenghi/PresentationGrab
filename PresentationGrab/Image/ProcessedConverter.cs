@@ -35,7 +35,7 @@ namespace PresentationGrab.Image
             DirectoryInfo source = new DirectoryInfo($@"C:\Data\Work\Esame Stato\SupportingMedia\T{L}\P{P}");
             if (!source.Exists)
             {
-                source = new DirectoryInfo(@".\DebugBlob\output\");
+                source = new DirectoryInfo(@"C:\Data\Work\Wip\Capture\");
             }
             DirectoryInfo destParent = new DirectoryInfo($@"C:\Data\Work\Esame Stato\SupportingMedia\L{L}");
             if (!destParent.Exists)

@@ -166,6 +166,8 @@ namespace PresentationGrab
             PerformCapture();
         }
 
+        DateTime? lastCapure = null;
+
         private void PerformCapture(bool forceCapture = false)
         {
             var screenCaptureTimerState = screenCaptureTimer.Enabled;
@@ -177,6 +179,7 @@ namespace PresentationGrab
             var borderColor = Color.Transparent;
             if (result.ResultActions.HasFlag(ScreenManager.Results.NewImage) || result.ResultActions.HasFlag(ScreenManager.Results.CorrectedImage))
             {
+                lastCapure = DateTime.Now;
                 borderColor = Color.Green;
                 pictureBox1.Image = result.ResultingBitmap;
                 if (result.ResultActions.HasFlag(ScreenManager.Results.PointerLogged) && result.ResultActions.HasFlag(ScreenManager.Results.CorrectedImage))
@@ -189,7 +192,19 @@ namespace PresentationGrab
                 lblStatus.Text = $"{result.ResultActions} in {sw.ElapsedMilliseconds} ms.";
 
             screenCaptureTimer.Enabled = screenCaptureTimerState;
-            Debug.WriteLine($"{DateTime.Now} {DateTime.Now.Millisecond}");
+
+            if (lastCapure.HasValue)
+            {
+                if (!screenCaptureTimer.Enabled)
+                {
+                    lblElapsedTime.Text = lastCapure.Value.ToShortTimeString();
+                }
+                else
+                {
+                    var diff = DateTime.Now - lastCapure;
+                    lblElapsedTime.Text = $"{diff.Value:mm\\:ss}";
+                }
+            }
 
             if (!doSound)
                 return;
@@ -368,7 +383,6 @@ namespace PresentationGrab
             btnPositionToggle_Click(null, null);
         }
 
-
         private void button3_Click(object sender, EventArgs e)
         {
             DrawFullScreen.Draw(s.CropRectangle, Brushes.Gold);
@@ -376,8 +390,8 @@ namespace PresentationGrab
 
         private void button9_Click(object sender, EventArgs e)
         {
-            string L = "10";
-            string P = "04";
+            string L = $"{(int)nudL.Value:D2}";
+            string P = $"{(int)nudP.Value:D2}";
 
             var ret = MessageBox.Show($"Have you set L ({L}), P ({P}) and music file?", "Settings", MessageBoxButtons.YesNo);
             if (ret != DialogResult.Yes)
@@ -393,7 +407,7 @@ namespace PresentationGrab
         private void button8_Click(object sender, EventArgs e)
         {
             ProcessedConverter pc = new ProcessedConverter();
-            var s = new DirectoryInfo(@"C:\Data\Dev\MyUtils\PresentationGrab\PresentationGrab\bin\Debug\DebugBlob\output");
+            var s = new DirectoryInfo(@"C:\Data\Work\Wip\Capture");
             var d = new DirectoryInfo(@"C:\Data\Work\CDE\OpenCde\Meetings\2020 04 20");
             var a = new FileInfo(@"C:\Data\Work\CDE\OpenCde\Meetings\2020 04 20\CDE_11-03-04.mp3");
             pc.Process(s, d, a);

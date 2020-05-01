@@ -37,6 +37,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblElapsedTime = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.nudBRH = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,7 +55,6 @@
             this.cmdSetCrop = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.nudCaptureInterval = new System.Windows.Forms.NumericUpDown();
@@ -66,27 +68,33 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cmdAffinity = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
-            this.cmdAffinity = new System.Windows.Forms.Button();
+            this.nudL = new System.Windows.Forms.NumericUpDown();
+            this.nudP = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBRH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBRW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudNoise)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAreaThreshold)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCaptureInterval)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudP)).BeginInit();
             this.SuspendLayout();
             // 
             // button4
@@ -162,11 +170,13 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(182, 547);
+            this.tabControl1.Size = new System.Drawing.Size(182, 574);
             this.tabControl1.TabIndex = 8;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lblElapsedTime);
+            this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.nudBRH);
             this.tabPage1.Controls.Add(this.label7);
@@ -179,7 +189,6 @@
             this.tabPage1.Controls.Add(this.cmdCaptureNow);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.button7);
-            this.tabPage1.Controls.Add(this.pictureBox1);
             this.tabPage1.Controls.Add(this.lblStatus);
             this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.nudCaptureInterval);
@@ -187,15 +196,43 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(174, 521);
+            this.tabPage1.Size = new System.Drawing.Size(174, 548);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Screen";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // lblElapsedTime
+            // 
+            this.lblElapsedTime.Location = new System.Drawing.Point(6, 444);
+            this.lblElapsedTime.Name = "lblElapsedTime";
+            this.lblElapsedTime.Size = new System.Drawing.Size(159, 19);
+            this.lblElapsedTime.TabIndex = 34;
+            this.lblElapsedTime.Text = "No capture";
+            this.lblElapsedTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.Location = new System.Drawing.Point(6, 341);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(160, 100);
+            this.panel1.TabIndex = 33;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(154, 94);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 475);
+            this.label6.Location = new System.Drawing.Point(9, 507);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 32;
@@ -203,7 +240,7 @@
             // 
             // nudBRH
             // 
-            this.nudBRH.Location = new System.Drawing.Point(98, 473);
+            this.nudBRH.Location = new System.Drawing.Point(98, 505);
             this.nudBRH.Maximum = new decimal(new int[] {
             255,
             0,
@@ -223,7 +260,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 449);
+            this.label7.Location = new System.Drawing.Point(9, 481);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(57, 13);
             this.label7.TabIndex = 30;
@@ -231,7 +268,7 @@
             // 
             // nudBRW
             // 
-            this.nudBRW.Location = new System.Drawing.Point(98, 447);
+            this.nudBRW.Location = new System.Drawing.Point(98, 479);
             this.nudBRW.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -302,7 +339,7 @@
             // 
             this.nudAreaThreshold.Location = new System.Drawing.Point(98, 172);
             this.nudAreaThreshold.Maximum = new decimal(new int[] {
-            10000,
+            99000,
             0,
             0,
             0});
@@ -352,6 +389,7 @@
             // 
             // cmdSetCrop
             // 
+            this.cmdSetCrop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdSetCrop.Location = new System.Drawing.Point(6, 48);
             this.cmdSetCrop.Name = "cmdSetCrop";
             this.cmdSetCrop.Size = new System.Drawing.Size(144, 23);
@@ -381,20 +419,11 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(6, 349);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(159, 92);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 20;
-            this.pictureBox1.TabStop = false;
-            // 
             // lblStatus
             // 
             this.lblStatus.Location = new System.Drawing.Point(6, 297);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(159, 49);
+            this.lblStatus.Size = new System.Drawing.Size(160, 49);
             this.lblStatus.TabIndex = 18;
             this.lblStatus.Text = "Status:";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -459,13 +488,16 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(174, 521);
+            this.tabPage2.Size = new System.Drawing.Size(174, 548);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Process";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.nudP);
+            this.groupBox4.Controls.Add(this.nudL);
             this.groupBox4.Controls.Add(this.button9);
             this.groupBox4.Controls.Add(this.label5);
             this.groupBox4.Location = new System.Drawing.Point(7, 88);
@@ -529,7 +561,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(174, 521);
+            this.tabPage3.Size = new System.Drawing.Size(174, 548);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Misc";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -544,6 +576,16 @@
             this.groupBox2.TabIndex = 25;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "WIP";
+            // 
+            // cmdAffinity
+            // 
+            this.cmdAffinity.Location = new System.Drawing.Point(6, 48);
+            this.cmdAffinity.Name = "cmdAffinity";
+            this.cmdAffinity.Size = new System.Drawing.Size(144, 23);
+            this.cmdAffinity.TabIndex = 20;
+            this.cmdAffinity.Text = "Affintiy";
+            this.cmdAffinity.UseVisualStyleBackColor = true;
+            this.cmdAffinity.Click += new System.EventHandler(this.cmdAffinity_Click);
             // 
             // button6
             // 
@@ -585,21 +627,46 @@
             // 
             this.mouseCaptureTimer.Tick += new System.EventHandler(this.mouseCaptureTimer_Tick);
             // 
-            // cmdAffinity
+            // nudL
             // 
-            this.cmdAffinity.Location = new System.Drawing.Point(6, 48);
-            this.cmdAffinity.Name = "cmdAffinity";
-            this.cmdAffinity.Size = new System.Drawing.Size(144, 23);
-            this.cmdAffinity.TabIndex = 20;
-            this.cmdAffinity.Text = "Affintiy";
-            this.cmdAffinity.UseVisualStyleBackColor = true;
-            this.cmdAffinity.Click += new System.EventHandler(this.cmdAffinity_Click);
+            this.nudL.Location = new System.Drawing.Point(40, 76);
+            this.nudL.Name = "nudL";
+            this.nudL.Size = new System.Drawing.Size(55, 20);
+            this.nudL.TabIndex = 24;
+            this.nudL.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudL.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            // 
+            // nudP
+            // 
+            this.nudP.Location = new System.Drawing.Point(101, 76);
+            this.nudP.Name = "nudP";
+            this.nudP.Size = new System.Drawing.Size(55, 20);
+            this.nudP.TabIndex = 25;
+            this.nudP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudP.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 78);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(25, 13);
+            this.label8.TabIndex = 26;
+            this.label8.Text = "L/P";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(206, 571);
+            this.ClientSize = new System.Drawing.Size(206, 598);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
             this.Text = "LectureCapture";
@@ -608,20 +675,24 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBRH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBRW)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudNoise)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAreaThreshold)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCaptureInterval)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudP)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -669,6 +740,11 @@
         private System.Windows.Forms.NumericUpDown nudBRW;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button cmdAffinity;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblElapsedTime;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown nudP;
+        private System.Windows.Forms.NumericUpDown nudL;
     }
 }
 
