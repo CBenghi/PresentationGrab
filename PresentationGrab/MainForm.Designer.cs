@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -62,6 +49,9 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.nudP = new System.Windows.Forms.NumericUpDown();
+            this.nudL = new System.Windows.Forms.NumericUpDown();
             this.button9 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -74,9 +64,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
-            this.nudL = new System.Windows.Forms.NumericUpDown();
-            this.nudP = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
+            this.cmbLang = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -90,18 +78,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudCaptureInterval)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudL)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudP)).BeginInit();
             this.SuspendLayout();
             // 
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(7, 51);
+            this.button4.Location = new System.Drawing.Point(7, 111);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(149, 23);
             this.button4.TabIndex = 3;
@@ -114,11 +102,11 @@
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(7, 235);
+            this.textBox1.Location = new System.Drawing.Point(7, 293);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(162, 285);
+            this.textBox1.Size = new System.Drawing.Size(162, 227);
             this.textBox1.TabIndex = 4;
             // 
             // button5
@@ -500,7 +488,7 @@
             this.groupBox4.Controls.Add(this.nudL);
             this.groupBox4.Controls.Add(this.button9);
             this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Location = new System.Drawing.Point(7, 88);
+            this.groupBox4.Location = new System.Drawing.Point(11, 158);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
@@ -508,6 +496,41 @@
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Images";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 78);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(25, 13);
+            this.label8.TabIndex = 26;
+            this.label8.Text = "L/P";
+            // 
+            // nudP
+            // 
+            this.nudP.Location = new System.Drawing.Point(101, 76);
+            this.nudP.Name = "nudP";
+            this.nudP.Size = new System.Drawing.Size(55, 20);
+            this.nudP.TabIndex = 25;
+            this.nudP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudP.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // nudL
+            // 
+            this.nudL.Location = new System.Drawing.Point(40, 76);
+            this.nudL.Name = "nudL";
+            this.nudL.Size = new System.Drawing.Size(55, 20);
+            this.nudL.TabIndex = 24;
+            this.nudL.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudL.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
             // 
             // button9
             // 
@@ -531,13 +554,14 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cmbLang);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.button4);
             this.groupBox3.Location = new System.Drawing.Point(7, 5);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(161, 79);
+            this.groupBox3.Size = new System.Drawing.Size(161, 139);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Transcript";
@@ -627,40 +651,16 @@
             // 
             this.mouseCaptureTimer.Tick += new System.EventHandler(this.mouseCaptureTimer_Tick);
             // 
-            // nudL
+            // cmbLang
             // 
-            this.nudL.Location = new System.Drawing.Point(40, 76);
-            this.nudL.Name = "nudL";
-            this.nudL.Size = new System.Drawing.Size(55, 20);
-            this.nudL.TabIndex = 24;
-            this.nudL.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudL.Value = new decimal(new int[] {
-            12,
-            0,
-            0,
-            0});
-            // 
-            // nudP
-            // 
-            this.nudP.Location = new System.Drawing.Point(101, 76);
-            this.nudP.Name = "nudP";
-            this.nudP.Size = new System.Drawing.Size(55, 20);
-            this.nudP.TabIndex = 25;
-            this.nudP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudP.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(5, 78);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(25, 13);
-            this.label8.TabIndex = 26;
-            this.label8.Text = "L/P";
+            this.cmbLang.FormattingEnabled = true;
+            this.cmbLang.Items.AddRange(new object[] {
+            "it",
+            "en"});
+            this.cmbLang.Location = new System.Drawing.Point(7, 84);
+            this.cmbLang.Name = "cmbLang";
+            this.cmbLang.Size = new System.Drawing.Size(149, 21);
+            this.cmbLang.TabIndex = 4;
             // 
             // MainForm
             // 
@@ -687,12 +687,12 @@
             this.tabPage2.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudL)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudP)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -745,6 +745,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown nudP;
         private System.Windows.Forms.NumericUpDown nudL;
+        private System.Windows.Forms.ComboBox cmbLang;
     }
 }
 

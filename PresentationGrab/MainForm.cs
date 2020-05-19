@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,8 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Accord.IO;
-using PresentationGrab.Image;
+using PresentationGrab.ImageProcessing;
 using PresentationGrab.Voice;
 
 namespace PresentationGrab
@@ -24,6 +22,20 @@ namespace PresentationGrab
             InitializeComponent();
             trackBar1.Value = wordSeparationThreshold;
             UpdateCaptureToggleButton();
+
+            checkwindows();
+        }
+
+        private void checkwindows()
+        {
+            var wds = OpenWindowsGetter.GetOpenWindows();
+            foreach (var window in wds)
+            {
+                IntPtr handle = window.Key;
+                string title = window.Value;
+
+                Console.WriteLine("{0}: {1}", handle, title);
+            }
         }
 
         private void OldCodeImageNames(object sender, EventArgs e)
@@ -110,20 +122,14 @@ namespace PresentationGrab
             // SpeechConvert.LongRunningRecognize(@"gs://audio_playground/Part2.flac", "it");
 
             //  ========================================================================================================================
-            var language = "it";                                                                             // <====== FIX THE LANGUAGE
-            // var language = "it";                                                                          // <====== FIX THE LANGUAGE
-
-            var ret = MessageBox.Show($"Using language {language}. Continue?", "Check language settings.", MessageBoxButtons.YesNoCancel);
-            if (ret != DialogResult.Yes)
-                return;
-
+            
             StringBuilder sb = new StringBuilder();
 
             foreach (var speech in SpeechConvert.GetFlacNames())
             {
                 sb.Append($"[{DateTime.Now}] Converting {speech}... ");
                 var storageName = $@"gs://audio_playground/{speech}";
-                var output = SpeechConvert.LongRunningRecognize(storageName, language);
+                var output = SpeechConvert.LongRunningRecognize(storageName, cmbLang.Text);
                 if (output != null && output.Exists)
                 {
                     TranscriptManager t = new TranscriptManager();
@@ -479,6 +485,25 @@ namespace PresentationGrab
                 md = AffinityMode.WDA_NONE;
             SetWindowDisplayAffinity(this.Handle, (uint)md);
             cmdAffinity.Text = $"Affinity is {md.ToString()}";
+        }
+
+        
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing )
+            {
+                if (components != null)
+                    components.Dispose();
+                if (s != null)
+                    s.Dispose();
+            }
+            
+            base.Dispose(disposing);
         }
     }
 }

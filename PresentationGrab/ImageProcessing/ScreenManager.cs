@@ -15,7 +15,7 @@ using Accord.Statistics.Distributions.Univariate;
 using Accord;
 using System.Xml.XPath;
 
-namespace PresentationGrab
+namespace PresentationGrab.ImageProcessing
 {
     class ScreenManager : IDisposable
     {
@@ -44,7 +44,7 @@ namespace PresentationGrab
 
         private Rectangle cropRectangle = new Rectangle(
                     new System.Drawing.Point(456, 184),
-                    new Size(2417 - 456, 1287 - 184)
+                    new Size(1907, 1070)
                     );
 
         internal Rectangle CropRectangle
@@ -230,7 +230,7 @@ namespace PresentationGrab
 
         Accord.Point pointerToRemove;
 
-        readonly PointerDetector pointerDetector = new PointerDetector();
+        PointerDetector pointerDetector = new PointerDetector();
 
         TimeSpan MinDeltaCaptureTime = new TimeSpan(0, 0, 2); // 2 seconds.
 
@@ -253,7 +253,13 @@ namespace PresentationGrab
             currentBackground = bitmapUnderAnalysis;
             diffFilter = new Subtract(currentBackground);
             if (TrackPowerPointLaser)
+            {
+                if (pointerDetector == null)
+                {
+                    pointerDetector = new PointerDetector();
+                }
                 needPointerRemoval = pointerDetector.HasPointer(bitmapUnderAnalysis, out pointerToRemove);
+            }
             else
                 needPointerRemoval = false;
             currentBackgroundTimeStamp = timeStamp;

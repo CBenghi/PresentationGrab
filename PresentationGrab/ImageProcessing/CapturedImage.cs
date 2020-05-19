@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PresentationGrab.Preprocess
+namespace PresentationGrab.ImageProcessing
 {
     class CapturedImage
     {

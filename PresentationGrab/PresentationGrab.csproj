@@ -133,21 +133,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageProcessing\OpenWindowsGetter.cs" />
+    <Compile Include="ImageProcessing\ScreenCapture.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Image\DrawFullScreen.cs" />
-    <Compile Include="Image\ProcessedConverter.cs" />
-    <Compile Include="Image\ImageFeeder.cs" />
+    <Compile Include="ImageProcessing\DrawFullScreen.cs" />
+    <Compile Include="ImageProcessing\ProcessedConverter.cs" />
+    <Compile Include="ImageProcessing\ImageFeeder.cs" />
     <Compile Include="MusicBee\MusicBeeLyrics.cs" />
-    <Compile Include="Image\PointerDetector.cs" />
-    <Compile Include="Image\CapturedImage.cs" />
+    <Compile Include="ImageProcessing\PointerDetector.cs" />
+    <Compile Include="ImageProcessing\CapturedImage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Image\ScreenManager.cs" />
+    <Compile Include="ImageProcessing\ScreenManager.cs" />
     <Compile Include="Voice\SpeechConvert.cs" />
     <Compile Include="Voice\TranscriptManager.cs" />
     <Compile Include="Voice\VoiceExtensions.cs" />

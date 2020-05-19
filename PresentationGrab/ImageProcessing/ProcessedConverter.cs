@@ -1,6 +1,5 @@
 ﻿using Accord.Imaging.Filters;
 using NAudio.Wave;
-using PresentationGrab.Preprocess;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PresentationGrab.Image
+namespace PresentationGrab.ImageProcessing
 {
     class ProcessedConverter
     {
