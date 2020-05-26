@@ -23,20 +23,10 @@ namespace PresentationGrab
             trackBar1.Value = wordSeparationThreshold;
             UpdateCaptureToggleButton();
 
-            checkwindows();
+            
         }
 
-        private void checkwindows()
-        {
-            var wds = OpenWindowsGetter.GetOpenWindows();
-            foreach (var window in wds)
-            {
-                IntPtr handle = window.Key;
-                string title = window.Value;
-
-                Console.WriteLine("{0}: {1}", handle, title);
-            }
-        }
+    
 
         private void OldCodeImageNames(object sender, EventArgs e)
         {
@@ -163,7 +153,7 @@ namespace PresentationGrab
             button5_Click(null, null);
         }
 
-        ScreenManager s = new ScreenManager();
+        ScreenManager imageGrabber = new ScreenManager();
 
         bool doSound = false;
 
@@ -181,7 +171,7 @@ namespace PresentationGrab
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var result = s.CheckNew(DateTime.Now, forceCapture);
+            var result = imageGrabber.CheckNew(DateTime.Now, forceCapture);
             var borderColor = Color.Transparent;
             if (result.ResultActions.HasFlag(ScreenManager.Results.NewImage) || result.ResultActions.HasFlag(ScreenManager.Results.CorrectedImage))
             {
@@ -239,9 +229,9 @@ namespace PresentationGrab
         {
             var f = new FileInfo(filename);
             var r = new Bitmap(f.FullName);
-            r = s.DoCrop(r);
-            r = s.RemoveAlpha(r);
-            s.CheckNew(f.CreationTime, false, r);
+            r = imageGrabber.DoCrop(r);
+            r = imageGrabber.RemoveAlpha(r);
+            imageGrabber.CheckNew(f.CreationTime, false, r);
         }
 
         private void btnCaptureToggle_Click(object sender, EventArgs e)
@@ -300,7 +290,7 @@ namespace PresentationGrab
         private void mouseCaptureTimer_Tick(object sender, EventArgs e)
         {
             if (IsControlDown())
-                s.WriteCursorPosition();
+                imageGrabber.WriteCursorPosition();
         }
 
         public static bool IsControlDown()
@@ -318,9 +308,9 @@ namespace PresentationGrab
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (!s.OutputDirectory.Exists)
-                s.OutputDirectory.Create();
-            Process.Start(s.OutputDirectory.FullName);
+            if (!imageGrabber.OutputDirectory.Exists)
+                imageGrabber.OutputDirectory.Create();
+            Process.Start(imageGrabber.OutputDirectory.FullName);
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -343,7 +333,7 @@ namespace PresentationGrab
 
         private void btnPositionToggle_Click(object sender, EventArgs e)
         {
-            if (s.CropRectangle.Equals(CropRectFromForm()))
+            if (imageGrabber.CropRectangle.Equals(CropRectFromForm()))
             {
                 SetFormToLeft();
                 cmdSetCrop.Visible = false;
@@ -357,8 +347,8 @@ namespace PresentationGrab
             else
             {
                 // set form to crop area
-                Location = new Point(s.CropRectangle.X - 7, s.CropRectangle.Y);
-                Size = new Size(s.CropRectangle.Width + 14, s.CropRectangle.Height + 7);
+                Location = new Point(imageGrabber.CropRectangle.X - 7, imageGrabber.CropRectangle.Y);
+                Size = new Size(imageGrabber.CropRectangle.Width + 14, imageGrabber.CropRectangle.Height + 7);
                 cmdSetCrop.Visible = true;
                 if (screenCaptureTimer.Enabled)
                 {
@@ -385,13 +375,13 @@ namespace PresentationGrab
         
         private void cmdSetCrop_Click(object sender, EventArgs e)
         {
-            s.CropRectangle = CropRectFromForm();
+            imageGrabber.CropRectangle = CropRectFromForm();
             btnPositionToggle_Click(null, null);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            DrawFullScreen.Draw(s.CropRectangle, Brushes.Gold);
+            DrawFullScreen.Draw(imageGrabber.CropRectangle, Brushes.Gold);
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -421,7 +411,7 @@ namespace PresentationGrab
 
         private void cmdCaptureNow_Click(object sender, EventArgs e)
         {
-            if (s == null)
+            if (imageGrabber == null)
                 return;
             PerformCapture(true);
             if (!screenCaptureTimer.Enabled)
@@ -437,17 +427,17 @@ namespace PresentationGrab
 
         private void nudAreaThreshold_ValueChanged(object sender, EventArgs e)
         {
-            s.ImageDifferenceThreshold = (int)nudAreaThreshold.Value;
+            imageGrabber.ImageDifferenceThreshold = (int)nudAreaThreshold.Value;
         }
 
         private void nudNoise_ValueChanged(object sender, EventArgs e)
         {
-            s.NoiseThreshold = (int)nudNoise.Value;
+            imageGrabber.NoiseThreshold = (int)nudNoise.Value;
         }
 
         private void chkTrackPowerPointLaser_CheckedChanged(object sender, EventArgs e)
         {
-            s.TrackPowerPointLaser = chkTrackPowerPointLaser.Checked;
+            imageGrabber.TrackPowerPointLaser = chkTrackPowerPointLaser.Checked;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -457,12 +447,12 @@ namespace PresentationGrab
 
         private void nudBRW_ValueChanged(object sender, EventArgs e)
         {
-            s.ButtonregionWidth = (int)nudBRW.Value;
+            imageGrabber.ButtonregionWidth = (int)nudBRW.Value;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            s.ButtonregionHeight = (int)nudBRH.Value;
+            imageGrabber.ButtonregionHeight = (int)nudBRH.Value;
         }
 
         [DllImport("user32.dll")]
@@ -476,6 +466,8 @@ namespace PresentationGrab
         }
 
         AffinityMode md = AffinityMode.WDA_NONE;
+
+        
 
         private void cmdAffinity_Click(object sender, EventArgs e)
         {
@@ -499,11 +491,42 @@ namespace PresentationGrab
             {
                 if (components != null)
                     components.Dispose();
-                if (s != null)
-                    s.Dispose();
+                if (imageGrabber != null)
+                    imageGrabber.Dispose();
             }
             
             base.Dispose(disposing);
+        }
+
+        private void cmdSelectWindow_Click(object sender, EventArgs e)
+        {
+            frmWindowSelect wSel = new frmWindowSelect();
+            wSel.ShowDialog();     
+            if (wSel.retPtr != IntPtr.Zero)
+            {
+                imageGrabber.capturePtr = wSel.retPtr;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string L = $"{(int)nudL.Value:D2}";
+            string P = $"{(int)nudP.Value:D2}";
+            DirectoryInfo source = new DirectoryInfo($@"C:\Data\Work\Esame Stato\SupportingMedia\T{L}\P{P}");
+            var pngs = source.GetFiles("*.png");
+            var Page = new FileInfo(Path.Combine(source.FullName, $"L{L}P{P}.html"));
+
+            using (var p = Page.CreateText())
+            {
+                
+            }
+
+
         }
     }
 }

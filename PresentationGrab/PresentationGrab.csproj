@@ -133,6 +133,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\Audio.cs" />
+    <Compile Include="frmWindowSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWindowSelect.Designer.cs">
+      <DependentUpon>frmWindowSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageProcessing\OpenWindowsGetter.cs" />
     <Compile Include="ImageProcessing\ScreenCapture.cs" />
     <Compile Include="MainForm.cs">
@@ -153,6 +160,9 @@
     <Compile Include="Voice\SpeechConvert.cs" />
     <Compile Include="Voice\TranscriptManager.cs" />
     <Compile Include="Voice\VoiceExtensions.cs" />
+    <EmbeddedResource Include="frmWindowSelect.resx">
+      <DependentUpon>frmWindowSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

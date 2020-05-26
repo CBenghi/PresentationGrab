@@ -78,14 +78,27 @@ namespace PresentationGrab.ImageProcessing
 
         public Bitmap GetCroppedBitmapFromScreen()
         {
-            Bitmap printedScreen = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
-                                            Screen.PrimaryScreen.Bounds.Height,
-                                            System.Drawing.Imaging.PixelFormat.Format24bppRgb
-                                            );
-            Graphics graphics = Graphics.FromImage(printedScreen as System.Drawing.Image);
-            graphics.CopyFromScreen(0, 0, 0, 0, printedScreen.Size);
+            if (capturePtr != IntPtr.Zero)
+            {
+                var img = ScreenCapture.CaptureWindow(capturePtr) as Bitmap;
+                Clipboard.SetImage(img);
+                Bitmap bmp = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                Graphics graphics = Graphics.FromImage(bmp);
+                graphics.DrawImage(img, 0, 0);
+                graphics.DrawEllipse(Pens.Red, new Rectangle(0, 0, 100, 100));
+                return bmp;
+            }
+            else
+            {
+                Bitmap printedScreen = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
+                                                Screen.PrimaryScreen.Bounds.Height,
+                                                System.Drawing.Imaging.PixelFormat.Format24bppRgb
+                                                );
+                Graphics graphics = Graphics.FromImage(printedScreen as System.Drawing.Image);
+                graphics.CopyFromScreen(0, 0, 0, 0, printedScreen.Size);
 
-            return DoCrop(printedScreen);
+                return DoCrop(printedScreen);
+            }
         }
 
         private int noiseThreshold = 5;
@@ -313,7 +326,7 @@ namespace PresentationGrab.ImageProcessing
         int lastX = 0;
         int lastY = 0;
         private bool disposedValue;
-        
+        internal IntPtr capturePtr = IntPtr.Zero;
 
         internal string GetLyricsTimestamp(int playerPositionMilliseconds)
         {
