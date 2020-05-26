@@ -28,11 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lstWindows = new System.Windows.Forms.ListBox();
             this.cmdSelect = new System.Windows.Forms.Button();
             this.cmdRefresh = new System.Windows.Forms.Button();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.ctnCurrent = new System.Windows.Forms.Button();
+            this.lblPtr = new System.Windows.Forms.Label();
+            this.tmrPick = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // lstWindows
@@ -45,6 +49,7 @@
             this.lstWindows.Name = "lstWindows";
             this.lstWindows.Size = new System.Drawing.Size(776, 368);
             this.lstWindows.TabIndex = 0;
+            this.lstWindows.Click += new System.EventHandler(this.lstWindows_Click);
             // 
             // cmdSelect
             // 
@@ -87,11 +92,38 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // ctnCurrent
+            // 
+            this.ctnCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ctnCurrent.Location = new System.Drawing.Point(12, 417);
+            this.ctnCurrent.Name = "ctnCurrent";
+            this.ctnCurrent.Size = new System.Drawing.Size(75, 23);
+            this.ctnCurrent.TabIndex = 5;
+            this.ctnCurrent.Text = "Pick";
+            this.ctnCurrent.UseVisualStyleBackColor = true;
+            this.ctnCurrent.Click += new System.EventHandler(this.ctnCurrent_Click);
+            // 
+            // lblPtr
+            // 
+            this.lblPtr.AutoSize = true;
+            this.lblPtr.Location = new System.Drawing.Point(93, 422);
+            this.lblPtr.Name = "lblPtr";
+            this.lblPtr.Size = new System.Drawing.Size(106, 13);
+            this.lblPtr.TabIndex = 6;
+            this.lblPtr.Text = "No selected window.";
+            // 
+            // tmrPick
+            // 
+            this.tmrPick.Interval = 1000;
+            this.tmrPick.Tick += new System.EventHandler(this.tmrPick_Tick);
+            // 
             // frmWindowSelect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblPtr);
+            this.Controls.Add(this.ctnCurrent);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.txtFilter);
             this.Controls.Add(this.cmdRefresh);
@@ -111,5 +143,8 @@
         private System.Windows.Forms.Button cmdRefresh;
         private System.Windows.Forms.TextBox txtFilter;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button ctnCurrent;
+        private System.Windows.Forms.Label lblPtr;
+        private System.Windows.Forms.Timer tmrPick;
     }
 }

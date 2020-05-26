@@ -39,7 +39,6 @@ namespace PresentationGrab.ImageProcessing
 
 
             cropFilter = new Crop(CropRectangle);
-            removeNoiseFilter = new Subtract(GetGrey());
         }
 
         private Rectangle cropRectangle = new Rectangle(
@@ -60,7 +59,7 @@ namespace PresentationGrab.ImageProcessing
                 }
                 cropRectangle = value;
                 cropFilter = new Crop(CropRectangle);
-                removeNoiseFilter = new Subtract(GetGrey());
+                removeNoiseFilter = null;
             }
         }
 
@@ -81,11 +80,11 @@ namespace PresentationGrab.ImageProcessing
             if (capturePtr != IntPtr.Zero)
             {
                 var img = ScreenCapture.CaptureWindow(capturePtr) as Bitmap;
-                Clipboard.SetImage(img);
+                // Clipboard.SetImage(img);
                 Bitmap bmp = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                 Graphics graphics = Graphics.FromImage(bmp);
                 graphics.DrawImage(img, 0, 0);
-                graphics.DrawEllipse(Pens.Red, new Rectangle(0, 0, 100, 100));
+                // graphics.DrawEllipse(Pens.Red, new Rectangle(0, 0, 100, 100));
                 return bmp;
             }
             else
@@ -108,20 +107,20 @@ namespace PresentationGrab.ImageProcessing
             set
             {
                 noiseThreshold = value;
-                removeNoiseFilter = new Subtract(GetGrey());
+                removeNoiseFilter = null;
             }
         }
 
-        public Bitmap GetGrey()
+        public Bitmap GetGrey(Bitmap relevantBmp)
         {
             var greyIntensity = NoiseThreshold;
-            Bitmap printedScreen = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
-                                            Screen.PrimaryScreen.Bounds.Height,
+            Bitmap makingGrey = new Bitmap(relevantBmp.Width,
+                                            relevantBmp.Height,
                                             System.Drawing.Imaging.PixelFormat.Format24bppRgb
                                             );
-            Graphics graphics = Graphics.FromImage(printedScreen as System.Drawing.Image);
+            Graphics graphics = Graphics.FromImage(makingGrey);
             graphics.Clear(Color.FromArgb(255, greyIntensity, greyIntensity, greyIntensity));
-            return DoCrop(printedScreen);
+            return makingGrey;
         }
 
         internal Bitmap DoCrop(Bitmap inputImage)
@@ -180,7 +179,8 @@ namespace PresentationGrab.ImageProcessing
                 if (!imageCapture)
                 {
                     var diffImage = diffFilter.Apply(bitmapUnderAnalysis);
-
+                    if (removeNoiseFilter == null)
+                        removeNoiseFilter = new Subtract(GetGrey(diffImage));
                     diffImage = removeNoiseFilter.Apply(diffImage);
                     differenceBlobFounder.ProcessImage(diffImage);
 

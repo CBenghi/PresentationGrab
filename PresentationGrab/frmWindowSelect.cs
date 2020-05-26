@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -66,18 +67,56 @@ namespace PresentationGrab
 
         private void cmdSelect_Click(object sender, EventArgs e)
         {
-            var t = lstWindows.SelectedItem.ToString();
-            if (t!=null)
-            {
-                var wds = OpenWindowsGetter.GetOpenWindows().FirstOrDefault(x => x.Value == t).Key;
-                retPtr = wds;
-            }
             Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            retPtr = IntPtr.Zero;
             Close();
+        }
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+
+
+        private IntPtr GetActiveWindow()
+        {
+            IntPtr handle = IntPtr.Zero;
+            return GetForegroundWindow();
+        }
+
+        int cnt = 5;
+
+        private void ctnCurrent_Click(object sender, EventArgs e)
+        {
+            cnt = 5;
+            tmrPick.Enabled = true;
+        }
+
+        private void lstWindows_Click(object sender, EventArgs e)
+        {
+            if (lstWindows.SelectedItem != null)
+                return;
+            var t = lstWindows.SelectedItem.ToString();
+            if (t != null)
+            {
+                var wds = OpenWindowsGetter.GetOpenWindows().FirstOrDefault(x => x.Value == t).Key;
+                retPtr = wds;
+            }
+        }
+
+        private void tmrPick_Tick(object sender, EventArgs e)
+        {
+            cnt--;
+            lblPtr.Text = cnt.ToString();
+            if (cnt == 0)
+            {
+                retPtr = GetActiveWindow();
+                lblPtr.Text = retPtr.ToString();
+                tmrPick.Enabled = false;
+                this.Activate();
+            }
         }
     }
 }

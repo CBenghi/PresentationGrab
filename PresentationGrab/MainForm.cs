@@ -517,16 +517,28 @@ namespace PresentationGrab
         {
             string L = $"{(int)nudL.Value:D2}";
             string P = $"{(int)nudP.Value:D2}";
-            DirectoryInfo source = new DirectoryInfo($@"C:\Data\Work\Esame Stato\SupportingMedia\T{L}\P{P}");
+            DirectoryInfo source = new DirectoryInfo($@"C:\Data\Work\Esame Stato\SupportingMedia\L{L}\P{P}");
             var pngs = source.GetFiles("*.png");
             var Page = new FileInfo(Path.Combine(source.FullName, $"L{L}P{P}.html"));
 
+
+
             using (var p = Page.CreateText())
             {
-                
+                p.WriteLine("<HTML>");
+
+                p.WriteLine("<HEAD>");
+                p.WriteLine($"<TITLE>AFC - Lezione {L} Parte {P}</TITLE>");
+                p.WriteLine("</HEAD>");
+
+                p.WriteLine("<BODY>");
+                foreach (var png in pngs)
+                {
+                    p.WriteLine($"<IMG SRC=\"{png.Name}\" />");
+                }
+                p.WriteLine("</BODY>");
+                p.WriteLine("</HTML>");
             }
-
-
         }
     }
 }
