@@ -80,6 +80,11 @@ namespace PresentationGrab.ImageProcessing
             if (capturePtr != IntPtr.Zero)
             {
                 var img = ScreenCapture.CaptureWindow(capturePtr) as Bitmap;
+                if (img == null)
+                {
+                    capturePtr = IntPtr.Zero;
+                    return null;
+                }
                 // Clipboard.SetImage(img);
                 Bitmap bmp = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                 Graphics graphics = Graphics.FromImage(bmp);
@@ -159,19 +164,27 @@ namespace PresentationGrab.ImageProcessing
         internal ScreenManagerResult CheckNew(DateTime timeStamp, bool forceImageCapture = false, Bitmap bitmapUnderAnalysis = null)
         {
             ScreenManagerResult ret = new ScreenManagerResult();
-            
+
             // var s = new Stopwatch(); s.Start();
             if (bitmapUnderAnalysis == null)
+            {
                 bitmapUnderAnalysis = GetCroppedBitmapFromScreen();
+                if (bitmapUnderAnalysis == null)
+                {
+                    return ret;
+                }
+            }
+            
 
             // remove control region in the bottom left
             //
             bitmapUnderAnalysis = RemoveButtonsRegion(bitmapUnderAnalysis);
-            if (diffFilter == null)
+            if (diffFilter == null || diffFilter.OverlayImage.Width != bitmapUnderAnalysis.Width || diffFilter.OverlayImage.Height != bitmapUnderAnalysis.Height)
             {
                 // we need to init the first image
                 ret.ResultActions = SetBitmap(timeStamp, bitmapUnderAnalysis); // this also sets need to remove pointer
-                ret.ResultingBitmap = bitmapUnderAnalysis;               
+                ret.ResultingBitmap = bitmapUnderAnalysis;
+                removeNoiseFilter = null;
             }
             else
             {

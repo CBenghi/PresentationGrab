@@ -27,6 +27,8 @@ namespace PresentationGrab.ImageProcessing
         {
             // get te hDC of the target window
             IntPtr hdcSrc = User32.GetWindowDC(handle);
+            if (hdcSrc == IntPtr.Zero)
+                return null;
             // get the size
             User32.RECT windowRect = new User32.RECT();
             User32.GetWindowRect(handle, ref windowRect);

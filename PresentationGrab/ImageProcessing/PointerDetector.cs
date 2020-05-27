@@ -76,7 +76,7 @@ namespace PresentationGrab.ImageProcessing
 
                 if (ratio > 3)
                 {
-                    System.Diagnostics.Debug.WriteLine("skipped ratio");
+                    // System.Diagnostics.Debug.WriteLine("skipped ratio");
                     continue;
                 }
 

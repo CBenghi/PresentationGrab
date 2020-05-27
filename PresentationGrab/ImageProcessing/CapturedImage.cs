@@ -10,10 +10,6 @@ namespace PresentationGrab.ImageProcessing
 {
     class CapturedImage
     {
-        FileInfo file;
-
-        DateTime timeStamp;
-
         internal static DateTime GetTimeStampDate(FileInfo x)
         {
             // 2020-01-4--19-04-02.png
@@ -33,6 +29,5 @@ namespace PresentationGrab.ImageProcessing
 
             return ret.AddHours(th).AddMinutes(tm).AddSeconds(ts);
         }
-
     }
 }
