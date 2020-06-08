@@ -6,34 +6,29 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Test_Recorder
+namespace Audio
 {
-    public partial class Form2 
+    public partial class AudioRecord : IDisposable
     {
+
+        internal DirectoryInfo OutputDirectory { get; set; } = new DirectoryInfo(@"C:\Data\Work\Wip\Audio\");
+
         private IWaveIn recorder;
         private BufferedWaveProvider bufferedWaveProvider;
         private SavingWaveProvider savingWaveProvider;
-        private WaveOut player;
-        public Form2()
-        {
-            // InitializeComponent();
-        }
+        // private WaveOut player;
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            StartRecording();
-        }
+        bool isRecoding = false;
+        private bool disposedValue;
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            StopRecording();
-        }
         public void StartRecording()
         {
+            isRecoding = true;
             // set up the recorder
             // recorder = new WaveIn();
             recorder = new WasapiLoopbackCapture();
@@ -42,28 +37,66 @@ namespace Test_Recorder
 
             // set up our signal chain
             bufferedWaveProvider = new BufferedWaveProvider(recorder.WaveFormat);
-            savingWaveProvider = new SavingWaveProvider(bufferedWaveProvider, Guid.NewGuid() + ".wav");
 
-            // set up playback
-            player = new WaveOut();
-            player.Init(savingWaveProvider);
-            player.Volume = 1;
-            // begin playback & record
-            player.Play();
+            var timeString = $"_{DateTime.Now.ToString("HH-mm-ss")}.wav";
+            var wavFileName = Path.Combine(OutputDirectory.FullName, timeString);
+            savingWaveProvider = new SavingWaveProvider(bufferedWaveProvider, wavFileName);
+
+            //// set up playback
+            //player = new WaveOut();
+            //player.Init(savingWaveProvider);
+            //player.Volume = 1;
+            //// begin playback & record
+            //player.Play();
             recorder.StartRecording();
         }
+
         public void StopRecording()
         {
+            isRecoding = false;
             // stop recording
             recorder.StopRecording();
             // stop playback
-            player.Stop();
+            //player.Stop();
             // finalise the WAV file
             savingWaveProvider.Dispose();
         }
+
         private void RecorderOnDataAvailable(object sender, WaveInEventArgs waveInEventArgs)
         {
             bufferedWaveProvider.AddSamples(waveInEventArgs.Buffer, 0, waveInEventArgs.BytesRecorded);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (isRecoding)
+                        StopRecording();
+                    // TODO: dispose managed state (managed objects)
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~AudioRecord()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        void IDisposable.Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 

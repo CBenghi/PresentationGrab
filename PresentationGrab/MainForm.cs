@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PresentationGrab.ImageProcessing;
 using PresentationGrab.Voice;
+using Audio;
+using PresentationGrab.Audio;
 
 namespace PresentationGrab
 {
@@ -22,11 +24,10 @@ namespace PresentationGrab
             InitializeComponent();
             trackBar1.Value = wordSeparationThreshold;
             UpdateCaptureToggleButton();
-
-            
+            UpdateAudioCaptureToggleButton();
         }
 
-    
+        
 
         private void OldCodeImageNames(object sender, EventArgs e)
         {
@@ -257,6 +258,8 @@ namespace PresentationGrab
                 btnCaptureToggle.ImageIndex = 0;
             }
         }
+
+
 
         private void button11_Click(object sender, EventArgs e)
         {
@@ -539,6 +542,39 @@ namespace PresentationGrab
                 p.WriteLine("</BODY>");
                 p.WriteLine("</HTML>");
             }
+        }
+
+        private void UpdateAudioCaptureToggleButton()
+        {
+            if (audioRecorder != null)
+            {
+                btnAudioCapture.Text = "Stop audio capture";
+                btnAudioCapture.ImageIndex = 1;
+            }
+            else
+            {
+                btnAudioCapture.Text = "Start audio capture";
+                btnAudioCapture.ImageIndex = 0;
+            }
+        }
+
+        A2 audioRecorder;
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (audioRecorder == null)
+            {
+                audioRecorder = new A2();
+                audioRecorder.StartRecording();
+            }
+            else
+            {
+                audioRecorder.StopRecording();
+                var asDisp = audioRecorder as IDisposable;
+                asDisp.Dispose();
+                audioRecorder = null;
+            }
+            UpdateAudioCaptureToggleButton();
         }
     }
 }

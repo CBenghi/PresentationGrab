@@ -24,6 +24,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnAudioCapture = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblElapsedTime = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -47,9 +49,9 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.nudCaptureInterval = new System.Windows.Forms.NumericUpDown();
             this.btnCaptureToggle = new System.Windows.Forms.Button();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.nudP = new System.Windows.Forms.NumericUpDown();
             this.nudL = new System.Windows.Forms.NumericUpDown();
@@ -67,7 +69,6 @@
             this.button11 = new System.Windows.Forms.Button();
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -166,6 +167,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnAudioCapture);
             this.tabPage1.Controls.Add(this.lblElapsedTime);
             this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.label6);
@@ -191,6 +193,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Screen";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnAudioCapture
+            // 
+            this.btnAudioCapture.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAudioCapture.ImageIndex = 0;
+            this.btnAudioCapture.ImageList = this.imageList1;
+            this.btnAudioCapture.Location = new System.Drawing.Point(9, 542);
+            this.btnAudioCapture.Name = "btnAudioCapture";
+            this.btnAudioCapture.Size = new System.Drawing.Size(159, 23);
+            this.btnAudioCapture.TabIndex = 35;
+            this.btnAudioCapture.Text = "Start audio capture";
+            this.btnAudioCapture.UseVisualStyleBackColor = true;
+            this.btnAudioCapture.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Record.png");
+            this.imageList1.Images.SetKeyName(1, "Stop.png");
             // 
             // lblElapsedTime
             // 
@@ -474,13 +496,6 @@
             this.btnCaptureToggle.UseVisualStyleBackColor = true;
             this.btnCaptureToggle.Click += new System.EventHandler(this.btnCaptureToggle_Click);
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Record.png");
-            this.imageList1.Images.SetKeyName(1, "Stop.png");
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.groupBox4);
@@ -511,6 +526,16 @@
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Images";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(7, 131);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(149, 23);
+            this.button2.TabIndex = 27;
+            this.button2.Text = "AFC Images -> HTML";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label8
             // 
@@ -688,16 +713,6 @@
             // 
             this.mouseCaptureTimer.Tick += new System.EventHandler(this.mouseCaptureTimer_Tick);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(7, 131);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(149, 23);
-            this.button2.TabIndex = 27;
-            this.button2.Text = "AFC Images -> HTML";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -785,6 +800,7 @@
         private System.Windows.Forms.Button cmdSelectWindow;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnAudioCapture;
     }
 }
 
