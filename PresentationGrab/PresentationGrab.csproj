@@ -136,7 +136,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\A2.cs" />
+    <Compile Include="Audio\AudioRecorder.cs" />
+    <Compile Include="Audio\Mp3AudioRecorder.cs" />
     <Compile Include="frmWindowSelect.cs">
       <SubType>Form</SubType>
     </Compile>

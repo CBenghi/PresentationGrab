@@ -557,13 +557,13 @@ namespace PresentationGrab
             }
         }
 
-        AudioRecorder audioRecorder;
+        Mp3AudioRecorder audioRecorder;
 
         private void button10_Click(object sender, EventArgs e)
         {
             if (audioRecorder == null)
             {
-                audioRecorder = new AudioRecorder();
+                audioRecorder = new Mp3AudioRecorder();
                 audioRecorder.StartRecording();
             }
             else
