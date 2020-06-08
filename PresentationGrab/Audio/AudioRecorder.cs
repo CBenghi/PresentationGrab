@@ -5,14 +5,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NAudio.Lame;
 
 namespace PresentationGrab.Audio
 {
-    class A2 : IDisposable
+    class AudioRecorder : IDisposable
     {
 
         internal DirectoryInfo OutputDirectory { get; set; } = new DirectoryInfo(@"C:\Data\Work\Wip\Audio\");
 
+        static LameMP3FileWriter writer;
 
         WasapiLoopbackCapture CaptureInstance = new WasapiLoopbackCapture();
         private bool disposedValue;
@@ -20,11 +22,12 @@ namespace PresentationGrab.Audio
         internal void StartRecording()
         {
 
-            var timeString = $"_{DateTime.Now.ToString("HH-mm-ss")}.wav";
+            var timeString = $"_{DateTime.Now:HH-mm-ss}.wav";
             var wavFileName = Path.Combine(OutputDirectory.FullName, timeString);
 
             // Redefine the audio writer instance with the given configuration
             WaveFileWriter RecordedAudioWriter = new WaveFileWriter(wavFileName, CaptureInstance.WaveFormat);
+            
 
             // When the capturer receives audio, start writing the buffer into the mentioned file
             CaptureInstance.DataAvailable += (s, a) =>

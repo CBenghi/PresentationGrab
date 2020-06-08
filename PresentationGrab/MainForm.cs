@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PresentationGrab.ImageProcessing;
 using PresentationGrab.Voice;
-using Audio;
 using PresentationGrab.Audio;
 
 namespace PresentationGrab
@@ -558,13 +557,13 @@ namespace PresentationGrab
             }
         }
 
-        A2 audioRecorder;
+        AudioRecorder audioRecorder;
 
         private void button10_Click(object sender, EventArgs e)
         {
             if (audioRecorder == null)
             {
-                audioRecorder = new A2();
+                audioRecorder = new AudioRecorder();
                 audioRecorder.StartRecording();
             }
             else
