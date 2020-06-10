@@ -391,9 +391,9 @@ namespace PresentationGrab
             string L = $"{(int)nudL.Value:D2}";
             string P = $"{(int)nudP.Value:D2}";
 
-            var ret = MessageBox.Show($"Have you set L ({L}), P ({P}) and music file?", "Settings", MessageBoxButtons.YesNo);
-            if (ret != DialogResult.Yes)
-                return;
+            //var ret = MessageBox.Show($"Have you set L ({L}), P ({P}) and music file?", "Settings", MessageBoxButtons.YesNo);
+            //if (ret != DialogResult.Yes)
+            //    return;
 
             ProcessedConverter pc = new ProcessedConverter();
             // pc.Cropper = new Rectangle(new Point(24, 31), new Size(1912, 1071));
