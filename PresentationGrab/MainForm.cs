@@ -372,7 +372,7 @@ namespace PresentationGrab
         private void SetFormToLeft()
         {
             Location = new Point(10, 100);
-            Size = new Size(230, 600);
+            Size = new Size(230, 750);
         }
         
         private void cmdSetCrop_Click(object sender, EventArgs e)
@@ -549,11 +549,13 @@ namespace PresentationGrab
             {
                 btnAudioCapture.Text = "Stop audio capture";
                 btnAudioCapture.ImageIndex = 1;
+                btnTimedNote.Visible = true;
             }
             else
             {
                 btnAudioCapture.Text = "Start audio capture";
                 btnAudioCapture.ImageIndex = 0;
+                btnTimedNote.Visible = false;
             }
         }
 
@@ -574,6 +576,17 @@ namespace PresentationGrab
                 audioRecorder = null;
             }
             UpdateAudioCaptureToggleButton();
+        }
+
+        private void btnTimeNote_Click(object sender, EventArgs e)
+        {
+            if (audioRecorder.StartTime == null)
+                return;
+            DateTime start = audioRecorder.StartTime.Value;
+            var delta = DateTime.Now - start;
+            // L06P03[015:01.600]
+            var h = $"L{(int)nudL.Value:D2}P{(int)nudP.Value:D2}[{(int)delta.TotalMinutes:D3}:{(int)delta.Seconds:D2}.{(int)delta.Milliseconds:D3}]";
+            Clipboard.SetText(h);
         }
     }
 }

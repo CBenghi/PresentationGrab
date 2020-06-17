@@ -69,6 +69,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
+            this.btnTimedNote = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -167,6 +168,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnTimedNote);
             this.tabPage1.Controls.Add(this.btnAudioCapture);
             this.tabPage1.Controls.Add(this.lblElapsedTime);
             this.tabPage1.Controls.Add(this.panel1);
@@ -567,7 +569,7 @@
             this.nudL.TabIndex = 24;
             this.nudL.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nudL.Value = new decimal(new int[] {
-            18,
+            28,
             0,
             0,
             0});
@@ -713,6 +715,17 @@
             // 
             this.mouseCaptureTimer.Tick += new System.EventHandler(this.mouseCaptureTimer_Tick);
             // 
+            // btnTimedNote
+            // 
+            this.btnTimedNote.Location = new System.Drawing.Point(9, 571);
+            this.btnTimedNote.Name = "btnTimedNote";
+            this.btnTimedNote.Size = new System.Drawing.Size(159, 23);
+            this.btnTimedNote.TabIndex = 36;
+            this.btnTimedNote.Text = "Timed Note";
+            this.btnTimedNote.UseVisualStyleBackColor = true;
+            this.btnTimedNote.Visible = false;
+            this.btnTimedNote.Click += new System.EventHandler(this.btnTimeNote_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -801,6 +814,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnAudioCapture;
+        private System.Windows.Forms.Button btnTimedNote;
     }
 }
 

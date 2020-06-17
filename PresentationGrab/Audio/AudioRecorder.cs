@@ -14,8 +14,6 @@ namespace PresentationGrab.Audio
 
         internal DirectoryInfo OutputDirectory { get; set; } = new DirectoryInfo(@"C:\Data\Work\Wip\Audio\");
 
-        static LameMP3FileWriter writer;
-
         WasapiLoopbackCapture CaptureInstance = new WasapiLoopbackCapture();
         private bool disposedValue;
 

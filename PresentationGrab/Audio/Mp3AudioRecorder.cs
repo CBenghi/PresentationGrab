@@ -21,14 +21,18 @@ namespace PresentationGrab.Audio
             if (_stopped)
                 return false;
             dispWaveIn.StopRecording();
+            StartTime = null;
             return true;
         }
+
+        public DateTime? StartTime { get; set; }
 
         public bool StartRecording()
         {
             if (!_stopped)
                 return false;
-            var timeString = $"_{DateTime.Now:HH-mm-ss}.mp3";
+            StartTime = DateTime.Now;
+            var timeString = $"_{StartTime:HH-mm-ss}.mp3";
             var wavFileName = Path.Combine(OutputDirectory.FullName, timeString);
 
             // Start recording from loopback
