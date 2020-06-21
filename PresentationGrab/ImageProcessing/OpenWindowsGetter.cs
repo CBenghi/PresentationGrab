@@ -46,6 +46,10 @@ namespace PresentationGrab.ImageProcessing
         [DllImport("USER32.DLL")]
         private static extern int GetWindowTextLength(HWND hWnd);
 
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
+
+
         [DllImport("USER32.DLL")]
         private static extern bool IsWindowVisible(HWND hWnd);
 

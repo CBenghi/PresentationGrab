@@ -46,11 +46,27 @@ namespace PresentationGrab.ImageProcessing
                     new Size(1907, 1070)
                     );
 
+
+        public bool CropActive
+        {
+            set
+            {
+                if (value == false)
+                {
+                    cropFilter = null;
+                }
+            }
+        }
+
+
+
+
         internal Rectangle CropRectangle
         {
             get => cropRectangle; 
             set
             {
+                CropActive = true;
                 // if size is changed then 
                 if (!value.Size.Equals(cropRectangle.Size))
                 {
@@ -90,7 +106,7 @@ namespace PresentationGrab.ImageProcessing
                 Graphics graphics = Graphics.FromImage(bmp);
                 graphics.DrawImage(img, 0, 0);
                 // graphics.DrawEllipse(Pens.Red, new Rectangle(0, 0, 100, 100));
-                return bmp;
+                return DoCrop(bmp);
             }
             else
             {
@@ -130,8 +146,12 @@ namespace PresentationGrab.ImageProcessing
 
         internal Bitmap DoCrop(Bitmap inputImage)
         {
-            var cropped = cropFilter.Apply(inputImage);
-            return cropped;
+            if (cropFilter != null)
+            {
+                var cropped = cropFilter.Apply(inputImage);
+                return cropped;
+            }
+            return inputImage;
         }
 
         internal DirectoryInfo OutputDirectory { get; set; } = new DirectoryInfo(@"C:\Data\Work\Wip\Capture\");

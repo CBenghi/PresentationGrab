@@ -103,7 +103,7 @@ namespace PresentationGrab.ImageProcessing
         /// <summary>
         /// Helper class containing User32 API functions
         /// </summary>
-        private class User32
+        internal class User32
         {
             [StructLayout(LayoutKind.Sequential)]
             public struct RECT

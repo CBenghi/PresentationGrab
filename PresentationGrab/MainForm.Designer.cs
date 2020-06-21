@@ -24,6 +24,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnTimedNote = new System.Windows.Forms.Button();
             this.btnAudioCapture = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblElapsedTime = new System.Windows.Forms.Label();
@@ -69,7 +70,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
-            this.btnTimedNote = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -196,6 +197,17 @@
             this.tabPage1.Text = "Screen";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btnTimedNote
+            // 
+            this.btnTimedNote.Location = new System.Drawing.Point(9, 571);
+            this.btnTimedNote.Name = "btnTimedNote";
+            this.btnTimedNote.Size = new System.Drawing.Size(159, 23);
+            this.btnTimedNote.TabIndex = 36;
+            this.btnTimedNote.Text = "Timed Note";
+            this.btnTimedNote.UseVisualStyleBackColor = true;
+            this.btnTimedNote.Visible = false;
+            this.btnTimedNote.Click += new System.EventHandler(this.btnTimeNote_Click);
+            // 
             // btnAudioCapture
             // 
             this.btnAudioCapture.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -265,11 +277,6 @@
             this.nudBRH.Size = new System.Drawing.Size(67, 20);
             this.nudBRH.TabIndex = 31;
             this.nudBRH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudBRH.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
             this.nudBRH.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label7
@@ -293,11 +300,6 @@
             this.nudBRW.Size = new System.Drawing.Size(67, 20);
             this.nudBRW.TabIndex = 29;
             this.nudBRW.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudBRW.Value = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
             this.nudBRW.ValueChanged += new System.EventHandler(this.nudBRW_ValueChanged);
             // 
             // chkTrackPowerPointLaser
@@ -630,6 +632,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button10);
             this.tabPage3.Controls.Add(this.button1);
             this.tabPage3.Controls.Add(this.groupBox2);
             this.tabPage3.Controls.Add(this.button5);
@@ -715,16 +718,15 @@
             // 
             this.mouseCaptureTimer.Tick += new System.EventHandler(this.mouseCaptureTimer_Tick);
             // 
-            // btnTimedNote
+            // button10
             // 
-            this.btnTimedNote.Location = new System.Drawing.Point(9, 571);
-            this.btnTimedNote.Name = "btnTimedNote";
-            this.btnTimedNote.Size = new System.Drawing.Size(159, 23);
-            this.btnTimedNote.TabIndex = 36;
-            this.btnTimedNote.Text = "Timed Note";
-            this.btnTimedNote.UseVisualStyleBackColor = true;
-            this.btnTimedNote.Visible = false;
-            this.btnTimedNote.Click += new System.EventHandler(this.btnTimeNote_Click);
+            this.button10.Location = new System.Drawing.Point(9, 452);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(159, 30);
+            this.button10.TabIndex = 27;
+            this.button10.Text = "SetSize";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click_1);
             // 
             // MainForm
             // 
@@ -815,6 +817,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnAudioCapture;
         private System.Windows.Forms.Button btnTimedNote;
+        private System.Windows.Forms.Button button10;
     }
 }
 

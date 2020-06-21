@@ -335,7 +335,13 @@ namespace PresentationGrab
 
         private void btnPositionToggle_Click(object sender, EventArgs e)
         {
-            if (imageGrabber.CropRectangle.Equals(CropRectFromForm()))
+            var sendLeft = imageGrabber.CropRectangle.Equals(CropRectFromForm());
+            SendFormLeft(sendLeft);
+        }
+
+        private void SendFormLeft(bool sendLeft)
+        {
+            if (sendLeft)
             {
                 SetFormToLeft();
                 cmdSetCrop.Visible = false;
@@ -377,8 +383,26 @@ namespace PresentationGrab
         
         private void cmdSetCrop_Click(object sender, EventArgs e)
         {
-            imageGrabber.CropRectangle = CropRectFromForm();
-            btnPositionToggle_Click(null, null);
+            if (imageGrabber.capturePtr == IntPtr.Zero)
+            {
+                imageGrabber.CropRectangle = CropRectFromForm();
+                btnPositionToggle_Click(null, null);
+            }
+            else
+            {
+                var rectToSelect = CropRectFromForm();
+                var rectWindow = new ScreenCapture.User32.RECT();
+                ScreenCapture.User32.GetWindowRect(imageGrabber.capturePtr, ref rectWindow);
+                var t = rectToSelect.X;
+                Rectangle crop = new Rectangle(
+                    rectToSelect.X - rectWindow.left,
+                    rectToSelect.Y - rectWindow.top,
+                    rectToSelect.Width,
+                    rectToSelect.Height
+                    );
+                imageGrabber.CropRectangle = crop;
+                SendFormLeft(true);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -502,11 +526,25 @@ namespace PresentationGrab
 
         private void cmdSelectWindow_Click(object sender, EventArgs e)
         {
-            frmWindowSelect wSel = new frmWindowSelect();
-            wSel.ShowDialog();     
-            if (wSel.retPtr != IntPtr.Zero)
+            cmdSelectWindow.Text = "Window";
+            if (imageGrabber.capturePtr == IntPtr.Zero)
             {
-                imageGrabber.capturePtr = wSel.retPtr;
+                frmWindowSelect wSel = new frmWindowSelect();
+                wSel.ShowDialog();
+                if (wSel.retPtr != IntPtr.Zero)
+                {
+                    imageGrabber.capturePtr = wSel.retPtr;
+                    cmdSelectWindow.Text = "RemWindow";
+                    imageGrabber.CropActive = false;
+                }
+                else
+                {
+                    imageGrabber.capturePtr = IntPtr.Zero;
+                }
+            }
+            else
+            {
+                imageGrabber.capturePtr = IntPtr.Zero;
             }
         }
 
@@ -587,6 +625,28 @@ namespace PresentationGrab
             // L06P03[015:01.600]
             var h = $"L{(int)nudL.Value:D2}P{(int)nudP.Value:D2}[{(int)delta.TotalMinutes:D3}:{(int)delta.Seconds:D2}.{(int)delta.Milliseconds:D3}]";
             Clipboard.SetText(h);
+        }
+
+        private void button10_Click_1(object sender, EventArgs e)
+        {
+
+            //var rectWindow = new ScreenCapture.User32.RECT();
+            //ScreenCapture.User32.GetWindowRect(imageGrabber.capturePtr, ref rectWindow);
+            //var sw = rectWindow.right - rectWindow.left;
+            //var sh = rectWindow.bottom - rectWindow.top;
+
+            
+
+            int w = 1957;
+            int h = 1387    ;
+            const short SWP_NOMOVE = 0X2;
+            const short SWP_NOSIZE = 1;
+            const short SWP_NOZORDER = 0X4;
+            const int SWP_SHOWWINDOW = 0x0040;
+
+            if (imageGrabber.capturePtr == IntPtr.Zero)
+                return;
+            OpenWindowsGetter.SetWindowPos(imageGrabber.capturePtr, 0, 0, 0, w, h, SWP_NOMOVE | SWP_NOZORDER);
         }
     }
 }
