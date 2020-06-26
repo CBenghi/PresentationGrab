@@ -91,7 +91,7 @@ namespace PresentationGrab.ImageProcessing
             return clone;
         }
 
-        public Bitmap GetCroppedBitmapFromScreen()
+        public Bitmap GetCroppedBitmap()
         {
             if (capturePtr != IntPtr.Zero)
             {
@@ -166,7 +166,8 @@ namespace PresentationGrab.ImageProcessing
             NothingDone = 0,
             NewImage = 1,
             CorrectedImage = 2,
-            PointerLogged = 4
+            PointerLogged = 4,
+            WindowNotFound = 8
         }
 
         public class ScreenManagerResult
@@ -188,9 +189,10 @@ namespace PresentationGrab.ImageProcessing
             // var s = new Stopwatch(); s.Start();
             if (bitmapUnderAnalysis == null)
             {
-                bitmapUnderAnalysis = GetCroppedBitmapFromScreen();
+                bitmapUnderAnalysis = GetCroppedBitmap();
                 if (bitmapUnderAnalysis == null)
                 {
+                    ret.ResultActions |= Results.WindowNotFound;
                     return ret;
                 }
             }
@@ -234,6 +236,7 @@ namespace PresentationGrab.ImageProcessing
                         if (WriteMouseCoords(pointerToRemove.X, pointerToRemove.Y, timeStamp, "capture"))
                             ret.ResultActions |= Results.PointerLogged;
                     }
+                    SaveTemp();
                 }
                 else if (TrackPowerPointLaser)
                 {
@@ -258,8 +261,8 @@ namespace PresentationGrab.ImageProcessing
             return ret;
         }
 
-        public int ButtonregionWidth { get; set; } = 300;
-        public int ButtonregionHeight { get; set; } = 30;
+        public int ButtonregionWidth { get; set; } = 0;
+        public int ButtonregionHeight { get; set; } = 0;
 
 
         public Bitmap RemoveButtonsRegion(Bitmap bitmapUnderAnalysis)
@@ -292,7 +295,7 @@ namespace PresentationGrab.ImageProcessing
             }
             else
             {
-                // does not save but keeps previos timestamp:
+                // saves to temp but keeps previos timestamp, to save propertly later.
                 ret = Results.CorrectedImage;
                 timeStamp = currentBackgroundTimeStamp; // keep the timestamp of the dropped image.
             }
@@ -339,6 +342,25 @@ namespace PresentationGrab.ImageProcessing
                 {
                     currentBackground.Save(fullname);
                     currentBackground = null;
+                }
+                catch (Exception)
+                {
+                    // Clipboard.SetImage(currentBackground);
+                }
+            }
+        }
+        private void SaveTemp()
+        {
+            if (currentBackground != null)
+            {
+                var outName = $"temp.png";
+                // need to write the image to disk
+                if (!OutputDirectory.Exists)
+                    OutputDirectory.Create();
+                var fullname = Path.Combine(OutputDirectory.FullName, outName);
+                try
+                {
+                    currentBackground.Save(fullname);
                 }
                 catch (Exception)
                 {

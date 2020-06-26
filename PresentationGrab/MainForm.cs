@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using PresentationGrab.ImageProcessing;
 using PresentationGrab.Voice;
 using PresentationGrab.Audio;
+using static PresentationGrab.ImageProcessing.ScreenManager;
 
 namespace PresentationGrab
 {
@@ -172,6 +173,20 @@ namespace PresentationGrab
             Stopwatch sw = new Stopwatch();
             sw.Start();
             var result = imageGrabber.CheckNew(DateTime.Now, forceCapture);
+            if (result.ResultActions.HasFlag(Results.WindowNotFound))
+            {
+                if (audioRecorder != null)
+                {
+                    // stop audio recording.
+                    button10_Click(null, null);
+                }
+                if (screenCaptureTimerState == true)
+                {
+                    // stop screen capture.
+                    UpdateCaptureToggleButton();
+                    screenCaptureTimerState = false;
+                }
+            }
             var borderColor = Color.Transparent;
             if (result.ResultActions.HasFlag(ScreenManager.Results.NewImage) || result.ResultActions.HasFlag(ScreenManager.Results.CorrectedImage))
             {
