@@ -62,6 +62,7 @@
             this.cmbLang = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button10 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cmdAffinity = new System.Windows.Forms.Button();
@@ -70,7 +71,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
-            this.button10 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -516,6 +517,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button12);
             this.groupBox4.Controls.Add(this.button2);
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.nudP);
@@ -526,7 +528,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox4.Size = new System.Drawing.Size(161, 171);
+            this.groupBox4.Size = new System.Drawing.Size(161, 205);
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Images";
@@ -647,6 +649,16 @@
             this.tabPage3.Text = "Misc";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(9, 452);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(159, 30);
+            this.button10.TabIndex = 27;
+            this.button10.Text = "SetSize";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click_1);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(50, 333);
@@ -718,15 +730,15 @@
             // 
             this.mouseCaptureTimer.Tick += new System.EventHandler(this.mouseCaptureTimer_Tick);
             // 
-            // button10
+            // button12
             // 
-            this.button10.Location = new System.Drawing.Point(9, 452);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(159, 30);
-            this.button10.TabIndex = 27;
-            this.button10.Text = "SetSize";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click_1);
+            this.button12.Location = new System.Drawing.Point(8, 160);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(149, 23);
+            this.button12.TabIndex = 28;
+            this.button12.Text = "Index";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // MainForm
             // 
@@ -818,6 +830,7 @@
         private System.Windows.Forms.Button btnAudioCapture;
         private System.Windows.Forms.Button btnTimedNote;
         private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button12;
     }
 }
 

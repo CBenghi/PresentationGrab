@@ -10,6 +10,17 @@ namespace PresentationGrab.ImageProcessing
     /// </summary>
     public static class ScreenCapture
     {
+
+        private static float _sc = 0;
+        public static float Scaling()
+        {
+            if (_sc == 0)
+            {
+                _sc = ScreenCapture.GetScalingFactor();
+            }
+            return _sc;
+        }
+
         /// <summary>
         /// Creates an Image object containing a screen shot of the entire desktop
         /// </summary>
@@ -34,6 +45,8 @@ namespace PresentationGrab.ImageProcessing
             User32.GetWindowRect(handle, ref windowRect);
             int width = windowRect.right - windowRect.left;
             int height = windowRect.bottom - windowRect.top;
+            width = (int)(width * Scaling());
+            height = (int)(height * Scaling());
             // create a device context we can copy to
             IntPtr hdcDest = GDI32.CreateCompatibleDC(hdcSrc);
             // create a bitmap we can copy it to,
@@ -98,6 +111,31 @@ namespace PresentationGrab.ImageProcessing
             public static extern bool DeleteObject(IntPtr hObject);
             [DllImport("gdi32.dll")]
             public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
+
+            [DllImport("gdi32.dll")]
+            public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+        }
+
+        
+        public enum DeviceCap
+        {
+            VERTRES = 10,
+            DESKTOPVERTRES = 117,
+
+            // http://pinvoke.net/default.aspx/gdi32/GetDeviceCaps.html
+        }
+
+
+        internal static float GetScalingFactor()
+        {
+            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+            IntPtr desktop = g.GetHdc();
+            int LogicalScreenHeight = GDI32.GetDeviceCaps(desktop, (int)DeviceCap.VERTRES);
+            int PhysicalScreenHeight = GDI32.GetDeviceCaps(desktop, (int)DeviceCap.DESKTOPVERTRES);
+
+            float ScreenScalingFactor = (float)PhysicalScreenHeight / (float)LogicalScreenHeight;
+
+            return ScreenScalingFactor; // 1.25 = 125%
         }
 
         /// <summary>

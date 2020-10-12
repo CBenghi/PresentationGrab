@@ -35,6 +35,7 @@ namespace PresentationGrab.ImageProcessing
             if (!source.Exists)
             {
                 source = new DirectoryInfo(@"C:\Data\Work\Wip\Capture\");
+                source = new DirectoryInfo(@"C:\Data\Work\Wip\Capture\2020-6-24 - 31\");
             }
             DirectoryInfo destParent = new DirectoryInfo($@"C:\Data\Work\Esame Stato\SupportingMedia\L{L}");
             if (!destParent.Exists)

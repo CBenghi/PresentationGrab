@@ -13,7 +13,8 @@ using System.Windows.Forms;
 using PresentationGrab.ImageProcessing;
 using PresentationGrab.Voice;
 using PresentationGrab.Audio;
-using static PresentationGrab.ImageProcessing.ScreenManager;
+using static PresentationGrab.ImageProcessing.CaptureManager;
+using NAudio.Wave;
 
 namespace PresentationGrab
 {
@@ -154,7 +155,7 @@ namespace PresentationGrab
             button5_Click(null, null);
         }
 
-        ScreenManager imageGrabber = new ScreenManager();
+        CaptureManager imageGrabber = new CaptureManager();
 
         bool doSound = false;
 
@@ -188,12 +189,12 @@ namespace PresentationGrab
                 }
             }
             var borderColor = Color.Transparent;
-            if (result.ResultActions.HasFlag(ScreenManager.Results.NewImage) || result.ResultActions.HasFlag(ScreenManager.Results.CorrectedImage))
+            if (result.ResultActions.HasFlag(CaptureManager.Results.NewImage) || result.ResultActions.HasFlag(CaptureManager.Results.CorrectedImage))
             {
                 lastCapure = DateTime.Now;
                 borderColor = Color.Green;
                 pictureBox1.Image = result.ResultingBitmap;
-                if (result.ResultActions.HasFlag(ScreenManager.Results.PointerLogged) && result.ResultActions.HasFlag(ScreenManager.Results.CorrectedImage))
+                if (result.ResultActions.HasFlag(CaptureManager.Results.PointerLogged) && result.ResultActions.HasFlag(CaptureManager.Results.CorrectedImage))
                     borderColor = Color.Orange;
             }
             lblStatus.BackColor = borderColor;
@@ -221,17 +222,17 @@ namespace PresentationGrab
                 return;
 
             var beeped = false;
-            if (result.ResultActions.HasFlag(ScreenManager.Results.NewImage))
+            if (result.ResultActions.HasFlag(CaptureManager.Results.NewImage))
             {
                 Console.Beep(700, 150);
                 beeped = true;
             }
-            if (result.ResultActions.HasFlag(ScreenManager.Results.CorrectedImage))
+            if (result.ResultActions.HasFlag(CaptureManager.Results.CorrectedImage))
             {
                 Console.Beep(900, 150);
                 beeped = true;
             }
-            if (result.ResultActions.HasFlag(ScreenManager.Results.PointerLogged))
+            if (result.ResultActions.HasFlag(CaptureManager.Results.PointerLogged))
             {
                 Console.Beep(1000, 75);
                 beeped = true;
@@ -408,13 +409,13 @@ namespace PresentationGrab
                 var rectToSelect = CropRectFromForm();
                 var rectWindow = new ScreenCapture.User32.RECT();
                 ScreenCapture.User32.GetWindowRect(imageGrabber.capturePtr, ref rectWindow);
-                var t = rectToSelect.X;
                 Rectangle crop = new Rectangle(
                     rectToSelect.X - rectWindow.left,
                     rectToSelect.Y - rectWindow.top,
                     rectToSelect.Width,
                     rectToSelect.Height
                     );
+                crop = imageGrabber.FixRect(crop);
                 imageGrabber.CropRectangle = crop;
                 SendFormLeft(true);
             }
@@ -662,6 +663,36 @@ namespace PresentationGrab
             if (imageGrabber.capturePtr == IntPtr.Zero)
                 return;
             OpenWindowsGetter.SetWindowPos(imageGrabber.capturePtr, 0, 0, 0, w, h, SWP_NOMOVE | SWP_NOZORDER);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            var re = new Regex(@"(\d+).*", RegexOptions.Compiled);
+            for (int lecture = 18; lecture < 40; lecture++)
+            {
+                var pAudio = Path.Combine(@"C:\Data\Work\Esame Stato\Audio", $"L{lecture}");
+                var p = Path.Combine(@"C:\Data\Work\Esame Stato\SupportingMedia", $"L{lecture}");
+                var dirs = Directory.GetDirectories(p);
+                foreach (var dir in dirs)
+                {
+                    DirectoryInfo dinfor = new DirectoryInfo(dir);
+                    var mp3s = Directory.GetFiles(pAudio, $"L{lecture}{dinfor.Name}*.mp3");
+                    foreach (var mp3 in mp3s)
+                    {
+                        var file = TagLib.File.Create(mp3);
+                        string title = file.Tag.Title;
+
+                        Debug.WriteLine($"{title}");
+                    }
+
+
+                    var images = dinfor.GetFiles("*.png").OrderBy(x => Int32.Parse(re.Replace(x.Name, "$1")));
+                    foreach (var image in images)
+                    {
+                        Debug.WriteLine($"- {image.Name.Replace(".png", "")}");
+                    }
+                }
+            }
         }
     }
 }

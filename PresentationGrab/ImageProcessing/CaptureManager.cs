@@ -17,7 +17,7 @@ using System.Xml.XPath;
 
 namespace PresentationGrab.ImageProcessing
 {
-    class ScreenManager : IDisposable
+    class CaptureManager : IDisposable
     {
         readonly BlobCounterBase differenceBlobFounder;
         Crop cropFilter;
@@ -26,7 +26,10 @@ namespace PresentationGrab.ImageProcessing
         // this is the filter that we cache to compare from one frame to the next
         Subtract diffFilter = null;
 
-        public ScreenManager()
+
+        float _scaling = 1.0f;
+
+        public CaptureManager()
         {
             differenceBlobFounder = new BlobCounter
             {
@@ -39,12 +42,25 @@ namespace PresentationGrab.ImageProcessing
 
 
             cropFilter = new Crop(CropRectangle);
+
+            _scaling = ScreenCapture.GetScalingFactor();
         }
 
         private Rectangle cropRectangle = new Rectangle(
                     new System.Drawing.Point(456, 184),
                     new Size(1907, 1070)
                     );
+
+        internal Rectangle FixRect(Rectangle rect)
+        {
+            var r = new Rectangle(
+                (int)(rect.X * _scaling),
+                (int)(rect.Y * _scaling),
+                (int)(rect.Width * _scaling),
+                (int)(rect.Height * _scaling)
+                );
+            return r;
+        }
 
 
         public bool CropActive
