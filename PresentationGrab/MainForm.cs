@@ -681,17 +681,25 @@ namespace PresentationGrab
                     {
                         var file = TagLib.File.Create(mp3);
                         string title = file.Tag.Title;
+                        int dur = (int)Math.Round( file.Properties.Duration.TotalMinutes); 
 
-                        Debug.WriteLine($"{title}");
+                        Debug.WriteLine($"{title} ({dur} minuti)");
                     }
 
 
-                    var images = dinfor.GetFiles("*.png").OrderBy(x => Int32.Parse(re.Replace(x.Name, "$1")));
-                    foreach (var image in images)
-                    {
-                        Debug.WriteLine($"- {image.Name.Replace(".png", "")}");
-                    }
+                    //var images = dinfor.GetFiles("*.png").OrderBy(x => Int32.Parse(re.Replace(x.Name, "$1"))).ToList();
+                    //foreach (var image in images)
+                    //{
+                    //    if (nameFrom.Text != "" && nameTo.Text != "")
+                    //    {
+                    //        var replaced = image.FullName.Replace(nameFrom.Text, nameTo.Text);
+                    //        if (image.FullName != replaced)
+                    //            File.Move(image.FullName, replaced);
+                    //    }
+                    //    Debug.WriteLine($"- {image.Name.Replace(".png", "")}");
+                    //}
                 }
+                Debug.WriteLine($"");
             }
         }
     }

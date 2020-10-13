@@ -72,6 +72,8 @@
             this.screenCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.mouseCaptureTimer = new System.Windows.Forms.Timer(this.components);
             this.button12 = new System.Windows.Forms.Button();
+            this.nameFrom = new System.Windows.Forms.TextBox();
+            this.nameTo = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -109,11 +111,11 @@
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(11, 391);
+            this.textBox1.Location = new System.Drawing.Point(11, 406);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(158, 227);
+            this.textBox1.Size = new System.Drawing.Size(158, 212);
             this.textBox1.TabIndex = 4;
             // 
             // button5
@@ -517,6 +519,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.nameTo);
+            this.groupBox4.Controls.Add(this.nameFrom);
             this.groupBox4.Controls.Add(this.button12);
             this.groupBox4.Controls.Add(this.button2);
             this.groupBox4.Controls.Add(this.label8);
@@ -528,7 +532,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox4.Size = new System.Drawing.Size(161, 205);
+            this.groupBox4.Size = new System.Drawing.Size(161, 243);
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Images";
@@ -740,6 +744,20 @@
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
+            // nameFrom
+            // 
+            this.nameFrom.Location = new System.Drawing.Point(8, 189);
+            this.nameFrom.Name = "nameFrom";
+            this.nameFrom.Size = new System.Drawing.Size(100, 20);
+            this.nameFrom.TabIndex = 29;
+            // 
+            // nameTo
+            // 
+            this.nameTo.Location = new System.Drawing.Point(56, 215);
+            this.nameTo.Name = "nameTo";
+            this.nameTo.Size = new System.Drawing.Size(100, 20);
+            this.nameTo.TabIndex = 30;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -831,6 +849,8 @@
         private System.Windows.Forms.Button btnTimedNote;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.TextBox nameTo;
+        private System.Windows.Forms.TextBox nameFrom;
     }
 }
 
